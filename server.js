@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const morgan = require("morgan");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
@@ -16,9 +16,15 @@ mongoose
   .then(() => console.log("Connected to database"))
   .catch(err => console.log("CATCH: db", err));
 
+//morgan("tiny");
+
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use("/", (req, res, next) => {
+  console.log(req.method, req.url, req.body);
+  next();
+});
 
 // passport middleware is used for checking JSON web token
 app.use(passport.initialize());
