@@ -81,6 +81,7 @@ router.post("/login", (req, res) => {
           // Password matched, return json web token to user
           const payload = {
             id: user._id,
+            name: user.name,
             email: user.email,
             avatar: user.avatar
           };

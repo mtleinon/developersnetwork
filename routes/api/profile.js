@@ -8,6 +8,7 @@ const User = require("../../models/User");
 const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
 const validateEducationInput = require("../../validation/education");
+
 // @route   GET api/users/test
 // @desc    tests profile route
 // @access  public
