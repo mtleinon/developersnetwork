@@ -50,13 +50,13 @@ export class CreateProfile extends Component {
       website: this.state.website,
       location: this.state.location,
       status: this.state.status,
-      skills: this.state.skills, //TODO: .split(',').map(i => i.trim()),
+      skills: this.state.skills,
       githubusername: this.state.githubusername,
       bio: this.state.bio,
       twitter: this.state.twitter,
       facebook: this.state.facebook,
       linkedin: this.state.linkedin,
-      yuotube: this.state.yuotube,
+      youtube: this.state.youtube,
       instagram: this.state.instagram
     };
 
