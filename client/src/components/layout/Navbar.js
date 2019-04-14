@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
-import { clearCurrentProfile } from "../../actions/profileActions";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
+import { clearCurrentProfile } from '../../actions/profileActions';
 
 class Navbar extends Component {
   onLogoutClick(e) {
@@ -18,16 +18,21 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          <Link className="nav-link" to="/dashboard">
+            Dashboard
+          </Link>
+        </li>
+        <li className="nav-item">
           <a
             onClick={this.onLogoutClick.bind(this)}
             className="nav-link"
-            href="#"
+            href="#!"
           >
             <img
               className="rounded-circle"
               src={user.avatar}
               alt={user.name}
-              style={{ width: "25px", marginRight: "15px" }}
+              style={{ width: '25px', marginRight: '15px' }}
               title="You must have a Gravatar connect to your email to display an image"
             />
             Logout
@@ -71,7 +76,7 @@ class Navbar extends Component {
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
                   <a className="nav-link" href="profiles.html">
-                    {" "}
+                    {' '}
                     Developers
                   </a>
                 </li>
