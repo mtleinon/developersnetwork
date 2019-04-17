@@ -64,7 +64,6 @@ export class CreateProfile extends Component {
   };
 
   onChange = e => {
-    console.log('TCL: CreateProfile -> onChange -> e', e);
     this.setState({ [e.target.name]: e.target.value });
   };
 
