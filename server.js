@@ -1,9 +1,10 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const users = require('./routes/api/users');
-const profile = require('./routes/api/profile');
-const posts = require('./routes/api/posts');
+const express = require("express");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const path = require("path");
+const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
+const posts = require("./routes/api/posts");
 const app = express();
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -31,11 +32,11 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 // Routes
-app.use('/api/users', users);
-app.use('/api/profile', profile);
-app.use('/api/posts', posts);
+app.use("/api/users", users);
+app.use("/api/profile", profile);
+app.use("/api/posts", posts);
 
-// Server static assets if in production (React client)
+// Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
   app.get('*', (req, res) => {
