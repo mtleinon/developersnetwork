@@ -1,96 +1,72 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from "react-router-dom";
+
 import { loginUser } from "../../actions/authActions";
-// import classnames from "classnames";
 import TextFieldGroup from "../common/TextFieldGroup";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
+export default function Login() {
+  let history = useHistory();
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const errors = useSelector(state => state.errors);
 
-    this.state = {
-      email: "",
-      password: "",
-      errors: ""
-    };
-  }
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+    errors: ""
+  });
+
+  const onChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setState(s => ({ ...s, [name]: value }));
   };
 
-  onSubmit = e => {
+  const onSubmit = e => {
     e.preventDefault();
-    this.props.loginUser({
-      email: this.state.email,
-      password: this.state.password
-    });
+    dispatch(loginUser({
+      email: state.email,
+      password: state.password
+    }));
   };
 
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      history.push("/dashboard");
     }
-  }
+  }, [auth, history])
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
-
-  render() {
-    const { errors } = this.state;
-    return (
-      <div className="login">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
-              <p className="lead text-center">
-                Sign in to your DevConnector account
+  return (
+    <div className="login">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 m-auto">
+            <h1 className="display-4 text-center">Log In</h1>
+            <p className="lead text-center">
+              Sign in to your DevConnector account
               </p>
-              <form onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  name="email"
-                  placeHolder="Email Address"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  error={errors.email}
-                />
-                <TextFieldGroup
-                  name="password"
-                  type="password"
-                  placeHolder="Password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-            </div>
+            <form onSubmit={onSubmit}>
+              <TextFieldGroup
+                name="email"
+                placeHolder="Email Address"
+                value={state.email}
+                onChange={onChange}
+                error={errors.email}
+              />
+              <TextFieldGroup
+                name="password"
+                type="password"
+                placeHolder="Password"
+                value={state.password}
+                onChange={onChange}
+                error={errors.password}
+              />
+              <input type="submit" className="btn btn-info btn-block mt-4" />
+            </form>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(Login);
