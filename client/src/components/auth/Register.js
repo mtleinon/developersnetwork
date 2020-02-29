@@ -1,126 +1,96 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-// import classnames from "classnames";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from "react-router-dom";
 import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
-class Register extends Component {
-  constructor(props) {
-    super(props);
+export default function Register() {
+  let history = useHistory();
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const errors = useSelector(state => state.errors);
 
-    this.state = {
+  const [state, setState] = useState({
       name: "",
       email: "",
       password: "",
       password2: "",
       errors: {}
-    };
+  });
 
-    // this.onChange = this.onChange.bind(this);
-  }
-  // onChange(e) {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // }
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  const onChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setState(s => ({ ...s, [name]: value }));
   };
 
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      history.push("/dashboard");
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
-
-  onSubmit = e => {
+  }, [auth, history])
+  
+  const onSubmit = e => {
     e.preventDefault();
     const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
+      name: state.name,
+      email: state.email,
+      password: state.password,
+      password2: state.password2
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    dispatch(registerUser(newUser, history));
   };
 
-  render() {
-    const { errors } = this.state;
+  return (
+    <div className="register">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 m-auto">
+            <h1 className="display-4 text-center">Sign Up</h1>
+            <p className="lead text-center">
+              Create your DevConnector account
+            </p>
+            <form onSubmit={onSubmit}>
+              <TextFieldGroup
+                name="name"
+                placeHolder="Name"
+                value={state.name}
+                onChange={onChange}
+                error={errors.name}
+              />
+              <TextFieldGroup
+                name="email"
+                type="email"
+                placeHolder="Email Address"
+                value={state.email}
+                onChange={onChange}
+                error={errors.email}
+                info="This site uses Gravatar so if you want a profile image, use a
+                Gravatar email"
+              />
+              <TextFieldGroup
+                name="password"
+                placeHolder="Password"
+                value={state.password}
+                onChange={onChange}
+                error={errors.password}
+                type="password"
+              />
 
-    return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Sign Up</h1>
-              <p className="lead text-center">
-                Create your DevConnector account
-              </p>
-              <form onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  name="name"
-                  placeHolder="Name"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
-                <TextFieldGroup
-                  name="email"
-                  type="email"
-                  placeHolder="Email Address"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  error={errors.email}
-                  info="This site uses Gravatar so if you want a profile image, use a
-                  Gravatar email"
-                />
-                <TextFieldGroup
-                  name="password"
-                  placeHolder="Password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                  type="password"
-                />
-
-                <TextFieldGroup
-                  name="password2"
-                  placeHolder="Confirm Password"
-                  value={this.state.password2}
-                  onChange={this.onChange}
-                  error={errors.password2}
-                  type="password"
-                />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-            </div>
+              <TextFieldGroup
+                name="password2"
+                placeHolder="Confirm Password"
+                value={state.password2}
+                onChange={onChange}
+                error={errors.password2}
+                type="password"
+              />
+              <input type="submit" className="btn btn-info btn-block mt-4" />
+            </form>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
-Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
-
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(Register));
