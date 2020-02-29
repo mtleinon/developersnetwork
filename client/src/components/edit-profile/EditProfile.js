@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import InputGroup from '../common/InputGroup';
@@ -9,41 +9,52 @@ import SelectListGroup from '../common/SelectListGroup';
 import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 import isEmpty from '../../validation/is-empty';
 
-export class EditProfile extends Component {
-  constructor(props) {
-    super(props);
+const options = [
+  { label: '* Select professional Status', value: 0 },
+  { label: 'Developer', value: 'Developer' },
+  { label: 'Junior Developer', value: 'Junior Developer' },
+  { label: 'Senior Developer', value: 'Senior Developer' },
+  { label: 'Manager', value: 'Manager' },
+  { label: 'Student or Learning', value: 'Student or Learning' },
+  { label: 'Instructor', value: 'Instructor' },
+  { label: 'Intern', value: 'Intern' },
+  { label: 'Other', value: 'Other' }
+];
 
-    this.state = {
-      displaySocialInputs: false,
-      handle: '',
-      company: '',
-      website: '',
-      location: '',
-      status: '',
-      skills: '',
-      githubusername: '',
-      bio: '',
-      twitter: '',
-      facebook: '',
-      linkedin: '',
-      youtube: '',
-      instagram: '',
-      errors: {}
-    };
-  }
+const initialState = {
+  displaySocialInputs: false,
+  handle: '',
+  company: '',
+  website: '',
+  location: '',
+  status: '',
+  skills: '',
+  githubusername: '',
+  bio: '',
+  twitter: '',
+  facebook: '',
+  linkedin: '',
+  youtube: '',
+  instagram: '',
+  errors: {}
+}
 
-  componentDidMount() {
-    this.props.getCurrentProfile();
-  }
+export default function EditProfile() {
+  const history = useHistory();
+  const errors = useSelector(state => state.errors);
+  const currentProfile = useSelector(state => state.profile);
+  const dispatch = useDispatch();
+
+  const [state, setState] = useState(initialState);
+
+  useEffect(() => {
+    dispatch(getCurrentProfile());
+  }, [dispatch]);
 
   // Fill Edit Profile forms fields when component is mounted
-  componentWillReceiveProps = nextProps => {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-
-    if (nextProps.profile.profile) {
-      const profile = nextProps.profile.profile;
+  useEffect(() => {
+    if (currentProfile.profile) {
+      const profile = currentProfile.profile;
 
       // Convert skills array back to CSV
       const skillsCSV = profile.skills.join(',');
@@ -78,234 +89,171 @@ export class EditProfile extends Component {
         : '';
 
       // Set component fields state
-      this.setState({
-        handle: profile.handle,
-        skills: skillsCSV,
-        company: profile.company,
-        website: profile.website,
-        location: profile.location,
-        status: profile.status,
-        githubusername: profile.githubusername,
-        bio: profile.bio,
-        twitter: profile.twitter,
-        facebook: profile.facebook,
-        linkedin: profile.linkedin,
-        youtube: profile.youtube,
-        instagram: profile.instagram
-      });
+      setState({ ...profile, skills: skillsCSV });
     }
-  };
+  }, [currentProfile]);
 
-  onSubmit = e => {
+  const onSubmit = e => {
     e.preventDefault();
-    const profileData = {
-      handle: this.state.handle,
-      company: this.state.company,
-      website: this.state.website,
-      location: this.state.location,
-      status: this.state.status,
-      skills: this.state.skills,
-      githubusername: this.state.githubusername,
-      bio: this.state.bio,
-      twitter: this.state.twitter,
-      facebook: this.state.facebook,
-      linkedin: this.state.linkedin,
-      youtube: this.state.youtube,
-      instagram: this.state.instagram
-    };
-    this.props.createProfile(profileData, this.props.history);
+    dispatch(createProfile(state, history));
   };
 
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  const onChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setState(s => ({ ...s, [name]: value }));
   };
 
-  render() {
-    const { errors, displaySocialInputs } = this.state;
+  const toggleDisplaySocialInputs = () => {
+    setState(prevState => ({
+      ...prevState,
+      displaySocialInputs: !prevState.displaySocialInputs
+    }));
+  }
 
-    let socialInputs;
+  const socialInputs = (
+    <div>
+      <InputGroup
+        placeholder="Twitter Profile URL"
+        name="twitter"
+        icon="fab fa-twitter"
+        value={state.twitter}
+        onChange={onChange}
+        error={errors.twitter}
+      />
+      <InputGroup
+        placeholder="Facebook Page URL"
+        name="facebook"
+        icon="fab fa-facebook"
+        value={state.facebook}
+        onChange={onChange}
+        error={errors.facebook}
+      />
+      <InputGroup
+        placeholder="Linkedin Profile URL"
+        name="linkedin"
+        icon="fab fa-linkedin"
+        value={state.linkedin}
+        onChange={onChange}
+        error={errors.linkedin}
+      />
+      <InputGroup
+        placeholder="Youtube Channel URL"
+        name="youtube"
+        icon="fab fa-youtube"
+        value={state.youtube}
+        onChange={onChange}
+        error={errors.youtube}
+      />
+      <InputGroup
+        placeholder="Instagram Page URL"
+        name="instagram"
+        icon="fab fa-instagram"
+        value={state.instagram}
+        onChange={onChange}
+        error={errors.instagram}
+      />
+    </div>
+  );
 
-    if (displaySocialInputs) {
-      socialInputs = (
-        <div>
-          <InputGroup
-            placeholder="Twitter Profile URL"
-            name="twitter"
-            icon="fab fa-twitter"
-            value={this.state.twitter}
-            onChange={this.onChange}
-            error={errors.twitter}
-          />
-          <InputGroup
-            placeholder="Facebook Page URL"
-            name="facebook"
-            icon="fab fa-facebook"
-            value={this.state.facebook}
-            onChange={this.onChange}
-            error={errors.facebook}
-          />
-          <InputGroup
-            placeholder="Linkedin Profile URL"
-            name="linkedin"
-            icon="fab fa-linkedin"
-            value={this.state.linkedin}
-            onChange={this.onChange}
-            error={errors.linkedin}
-          />
-          <InputGroup
-            placeholder="Youtube Channel URL"
-            name="youtube"
-            icon="fab fa-youtube"
-            value={this.state.youtube}
-            onChange={this.onChange}
-            error={errors.youtube}
-          />
-          <InputGroup
-            placeholder="Instagram Page URL"
-            name="instagram"
-            icon="fab fa-instagram"
-            value={this.state.instagram}
-            onChange={this.onChange}
-            error={errors.instagram}
-          />
-        </div>
-      );
-    }
-    const options = [
-      { label: '* Select professional Status', value: 0 },
-      { label: 'Developer', value: 'Developer' },
-      { label: 'Junior Developer', value: 'Junior Developer' },
-      { label: 'Senior Developer', value: 'Senior Developer' },
-      { label: 'Manager', value: 'Manager' },
-      { label: 'Student or Learning', value: 'Student or Learning' },
-      { label: 'Instructor', value: 'Instructor' },
-      { label: 'Intern', value: 'Intern' },
-      { label: 'Other', value: 'Other' }
-    ];
+  return (
+    <div className="create-profile">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-8 m-auto">
+            <Link to="/dashboard" className="btn btn-light">
+              Go Back
+            </Link>
 
-    return (
-      <div className="create-profile">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <Link to="/dashboard" className="btn btn-light">
-                Go Back
-              </Link>
+            <h1 className="display-4 text-center">Edit Your Profile</h1>
+            <small className="d-block pb-3">* = required fields</small>
+            <form onSubmit={onSubmit}>
+              <TextFieldGroup
+                placeHolder="* Profile Handle"
+                name="handle"
+                value={state.handle}
+                onChange={onChange}
+                error={errors.handle}
+                info="A unique handle for your profile URL. Your full name, company name and nick name."
+              />
+              <SelectListGroup
+                placeHolder="Status"
+                name="status"
+                value={state.status}
+                onChange={onChange}
+                options={options}
+                error={errors.status}
+                info="Give us an idea of where you are at in your career."
+              />
+              <TextFieldGroup
+                placeHolder="Company"
+                name="company"
+                value={state.company}
+                onChange={onChange}
+                error={errors.company}
+                info="Could be your own company or ony you work for."
+              />
+              <TextFieldGroup
+                placeHolder="Website"
+                name="website"
+                value={state.website}
+                onChange={onChange}
+                error={errors.website}
+                info="Could be your own or a company website."
+              />
+              <TextFieldGroup
+                placeHolder="Location"
+                name="location"
+                value={state.location}
+                onChange={onChange}
+                error={errors.location}
+                info="City & state suggested (e.g. Boston, MA)"
+              />
+              <TextFieldGroup
+                placeHolder="Skills"
+                name="skills"
+                value={state.skills}
+                onChange={onChange}
+                error={errors.skills}
+                info="Please use comma separated values (e.g. HTML, CSS, Javascript, PHP)"
+              />
+              <TextFieldGroup
+                placeHolder="Github Username"
+                name="githubusername"
+                value={state.githubusername}
+                onChange={onChange}
+                error={errors.githubusername}
+                info="If you want your latest repos and a Github link, include your username."
+              />
+              <TextAreaFieldGroup
+                placeHolder="A short bio of yourself"
+                name="bio"
+                value={state.bio}
+                onChange={onChange}
+                error={errors.bio}
+                info="Tell us a little about yourself."
+              />
 
-              <h1 className="display-4 text-center">Edit Your Profile</h1>
-              <small className="d-block pb-3">* = required fields</small>
-              <form onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeHolder="* Profile Handle"
-                  name="handle"
-                  value={this.state.handle}
-                  onChange={this.onChange}
-                  error={errors.handle}
-                  info="A unique handle for your profile URL. Your full name, company name and nick name."
+              <div className="mb-3">
+                <button
+                  type="button"
+                  onClick={toggleDisplaySocialInputs}
+                  className="btn btn-light"
+                >
+                  Add Social Network Links
+                </button>
+                <span className="text-muted"> Optional</span>
+                {state.displaySocialInputs && socialInputs}
+                <input
+                  type="submit"
+                  className="btn btn-info btn-block mt-4"
                 />
-                <SelectListGroup
-                  placeHolder="Status"
-                  name="status"
-                  value={this.state.status}
-                  onChange={this.onChange}
-                  options={options}
-                  error={errors.status}
-                  info="Give us an idea of where you are at in your career."
-                />
-                <TextFieldGroup
-                  placeHolder="Company"
-                  name="company"
-                  value={this.state.company}
-                  onChange={this.onChange}
-                  error={errors.company}
-                  info="Could be your own company or ony you work for."
-                />
-                <TextFieldGroup
-                  placeHolder="Website"
-                  name="website"
-                  value={this.state.website}
-                  onChange={this.onChange}
-                  error={errors.website}
-                  info="Could be your own or a company website."
-                />
-                <TextFieldGroup
-                  placeHolder="Location"
-                  name="location"
-                  value={this.state.location}
-                  onChange={this.onChange}
-                  error={errors.location}
-                  info="City & state suggested (e.g. Boston, MA)"
-                />
-                <TextFieldGroup
-                  placeHolder="Skills"
-                  name="skills"
-                  value={this.state.skills}
-                  onChange={this.onChange}
-                  error={errors.skills}
-                  info="Please use comma separated values (e.g. HTML, CSS, Javascript, PHP)"
-                />
-                <TextFieldGroup
-                  placeHolder="Github Username"
-                  name="githubusername"
-                  value={this.state.githubusername}
-                  onChange={this.onChange}
-                  error={errors.githubusername}
-                  info="If you want your latest repos and a Github link, include your username."
-                />
-                <TextAreaFieldGroup
-                  placeHolder="A short bio of yourself"
-                  name="bio"
-                  value={this.state.bio}
-                  onChange={this.onChange}
-                  error={errors.bio}
-                  info="Tell us a little about yourself."
-                />
-
-                <div className="mb-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      this.setState(prevState => ({
-                        displaySocialInputs: !prevState.displaySocialInputs
-                      }));
-                    }}
-                    className="btn btn-light"
-                  >
-                    Add Social Network Links
-                  </button>
-                  <span className="text-muted"> Optional</span>
-                  {socialInputs}
-                  <input
-                    type="submit"
-                    className="btn btn-info btn-block mt-4"
-                  />
-                </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-EditProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  profile: state.profile,
-  errors: state.errors
-});
-
-const mapActionToProps = {
-  createProfile,
-  getCurrentProfile
-};
-export default connect(
-  mapStateToProps,
-  mapActionToProps
-)(withRouter(EditProfile));
