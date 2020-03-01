@@ -1,54 +1,42 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import PostForm from './PostForm';
 import Spinner from '../common/Spinner';
 import { getPosts } from '../../actions/postActions';
 import PostFeed from './PostFeed';
 
-export class Posts extends Component {
-  static propTypes = {
-    post: PropTypes.object.isRequired
-  };
+export default function Posts() {
+  const dispatch = useDispatch();
 
-  componentWillMount() {
-    this.props.getPosts();
-  }
+  const { posts, loading } = useSelector(state => state.post);
 
-  render() {
-    const { posts, loading } = this.props.post;
-    let postContent;
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
 
-    if (posts === null || loading) {
-      postContent = <Spinner />;
-    } else {
-      postContent = <PostFeed posts={posts} />;
-    }
-
-    return (
-      <div className="feed">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <PostForm />
-              {postContent}
-            </div>
+  return (
+    <div className="feed">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <PostForm />
+            {posts === null || loading ? <Spinner /> : <PostFeed posts={posts} />}
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-const mapStateToProps = state => ({
-  post: state.post
-});
+// const mapStateToProps = state => ({
+//   post: state.post
+// });
 
-const mapDispatchToProps = {
-  getPosts
-};
+// const mapDispatchToProps = {
+//   getPosts
+// };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Posts);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Posts);

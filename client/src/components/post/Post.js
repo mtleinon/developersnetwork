@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from "react-router-dom";
 import Spinner from '../common/Spinner';
 import { getPost } from '../../actions/postActions';
 import PostItem from '../posts/PostItem';
@@ -8,60 +8,59 @@ import CommentForm from './CommentForm';
 import CommentFeed from './CommentFeed';
 import { Link } from 'react-router-dom';
 
-class Post extends Component {
-  static propTypes = {
-    post: PropTypes.object.isRequired,
-    getPost: PropTypes.func.isRequired
-  };
+export default function Post(props) {
+  const post = useSelector(state => state.post);
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    this.props.getPost(this.props.match.params.id);
-  }
+  // static propTypes = {
+  //   post: PropTypes.object.isRequired,
+  //   getPost: PropTypes.func.isRequired
+  // };
 
-  render() {
-    const isLoading = this.props.isLoading;
-    const post = this.props.post.post;
+  useEffect(() => {
+    dispatch(getPost(id));
+  }, [dispatch, id]);
 
-    let postContent;
+  let postContent;
 
-    if (post === null || isLoading || Object.keys(post).length === 0) {
-      postContent = <Spinner />;
-    } else {
-      postContent = (
-        <div>
-          <PostItem post={post} showActions={false} />
-          <CommentForm postId={post._id} />
-          <CommentFeed postId={post._id} comments={post.comments} />
-        </div>
-      );
-    }
-
-    return (
-      <div className="post">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Link to="/feed" className="btn btn-light mb-3">
-                Back To Feed
-              </Link>
-              {postContent}
-            </div>
-          </div>
-        </div>
+  if (post.post === null || post.isLoading || Object.keys(post.post).length === 0) {
+    postContent = <Spinner />;
+  } else {
+    postContent = (
+      <div>
+        <PostItem post={post.post} showActions={false} />
+        <CommentForm postId={post.post._id} />
+        <CommentFeed postId={post.post._id} comments={post.post.comments} />
       </div>
     );
   }
+
+  return (
+    <div className="post">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Link to="/feed" className="btn btn-light mb-3">
+              Back To Feed
+              </Link>
+            {postContent}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-const mapStateToProps = state => ({
-  post: state.post
-});
+// const mapStateToProps = state => ({
+//   post: state.post
+// });
 
-const mapDispatchToProps = {
-  getPost
-};
+// const mapDispatchToProps = {
+//   getPost
+// };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Post);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Post);

@@ -1,87 +1,75 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../actions/postActions';
 
-class PostForm extends Component {
-  constructor(props) {
-    super(props);
+export default function PostForm() {
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const errors = useSelector(state => state.errors);
 
-    this.state = {
-      text: '',
-      errors: {}
-    };
-  }
+  const [state, setState] = useState({ text: '' });
 
-  static propTypes = {
-    addPost: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
-  };
+  // static propTypes = {
+  //   addPost: PropTypes.func.isRequired,
+  //   auth: PropTypes.object.isRequired,
+  //   errors: PropTypes.object.isRequired
+  // };
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.errors) {
-      this.setState({ errors: newProps.errors });
-    }
-  }
 
-  onSubmit = e => {
+  const onSubmit = e => {
     e.preventDefault();
-    const { user } = this.props.auth;
 
     const newPost = {
-      text: this.state.text,
-      name: user.name,
-      avatar: user.avatar
+      text: state.text,
+      name: auth.user.name,
+      avatar: auth.user.avatar
     };
-    this.props.addPost(newPost);
-    this.setState({ text: '' });
+    dispatch(addPost(newPost));
+    setState({ text: '' });
     console.log('submit');
   };
 
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+  const onChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setState(s => ({ ...s, [name]: value }));
   };
 
-  render() {
-    const { errors } = this.state;
-    return (
-      <div className="post-form mb-3">
-        <div className="card card-info">
-          <div className="card-header bg-info text-white">Say Something...</div>
-          <div className="card-body">
-            <form onSubmit={this.onSubmit}>
-              <div className="form-group">
-                <TextAreaFieldGroup
-                  placeholder="Create a post"
-                  name="text"
-                  value={this.state.text}
-                  onChange={this.onChange}
-                  error={errors.text}
-                />
-              </div>
-              <button type="submit" className="btn btn-dark">
-                Submit
+  return (
+    <div className="post-form mb-3">
+      <div className="card card-info">
+        <div className="card-header bg-info text-white">Say Something...</div>
+        <div className="card-body">
+          <form onSubmit={onSubmit}>
+            <div className="form-group">
+              <TextAreaFieldGroup
+                placeholder="Create a post"
+                name="text"
+                value={state.text}
+                onChange={onChange}
+                error={errors.text}
+              />
+            </div>
+            <button type="submit" className="btn btn-dark">
+              Submit
               </button>
-            </form>
-          </div>
+          </form>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
+// const mapStateToProps = state => ({
+//   auth: state.auth,
+//   errors: state.errors
+// });
 
-const mapDispatchToProps = { addPost };
+// const mapDispatchToProps = { addPost };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PostForm);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(PostForm);
