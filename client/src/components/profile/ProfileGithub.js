@@ -63,7 +63,7 @@ export default function ProfileGithub({ githubusername }) {
     <div>
       <hr />
       <h2 className="mb-4">Latest GitHub Repos</h2>
-      {repoItems}
+      {repoItems.length > 0 ? repoItems : 'No repos'}
     </div>
   );
 }

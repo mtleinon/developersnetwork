@@ -65,7 +65,7 @@ export default function ProfileCreds({ experience, education }) {
             <p className="text-center">No Experience Listed</p>
           )}
       </div>
-      <div className="col-md-6 mt-3">
+      <div className="col-md-6">
         <h3 className="text-center text-info">Education</h3>
         {educationList.length > 0 ? (
           <ul className="list-group">{educationList}</ul>
