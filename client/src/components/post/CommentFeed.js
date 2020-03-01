@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 import CommentItem from './CommentItem';
 
-export default class CommentFeed extends Component {
-  static propTypes = {
-    comments: PropTypes.array.isRequired,
-    postId: PropTypes.string.isRequired
-  };
+export default function CommentFeed({ comments, postId }) {
 
-  render() {
-    const { comments, postId } = this.props;
+  // static propTypes = {
+  //   comments: PropTypes.array.isRequired,
+  //   postId: PropTypes.string.isRequired
+  // };
 
-    return comments.map(comment => (
-      <CommentItem key={comment._id} comment={comment} postId={postId} />
-    ));
-  }
+  // const { comments, postId } = this.props;
+
+  return comments.map(comment => (
+    <CommentItem key={comment._id} comment={comment} postId={postId} />
+  ));
 }
