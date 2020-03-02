@@ -12,6 +12,9 @@ export interface ErrorsData {
   from?: string;
   to?: string;
   description?: string;
+  title?: string;
+  company?: string;
+  location?: string;
 }
 
 export interface ErrorsRootState {
