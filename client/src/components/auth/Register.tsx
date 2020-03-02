@@ -4,13 +4,13 @@ import { useHistory } from 'react-router-dom';
 import { registerUser, RegisterData } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import { Auth } from '../../reducers/authReducer';
-import { Errors } from '../../reducers/errorReducer';
+import { ErrorsRootState } from '../../types/errorTypes';
 
 export default function Register() {
   let history = useHistory();
   const dispatch = useDispatch();
   const auth = useSelector((state: Auth) => state.auth);
-  const errors = useSelector((state: Errors) => state.errors);
+  const errors = useSelector((state: ErrorsRootState) => state.errors);
 
   const [registerData, setRegisterData] = useState<RegisterData>({
     name: '',

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { History } from 'history';
+import { Profile } from '../types/profileTypes';
 
 import {
   GET_PROFILE,
@@ -10,7 +12,7 @@ import {
 } from './types';
 
 // Get all profiles
-export const getProfiles = () => dispatch => {
+export const getProfiles = () => (dispatch: any) => {
   dispatch(setProfileLoading());
   axios
     .get('/api/profile/all')
@@ -29,7 +31,7 @@ export const getProfiles = () => dispatch => {
 };
 
 // Get profile by handle
-export const getProfileByHandle = handle => dispatch => {
+export const getProfileByHandle = (handle: string) => (dispatch: any) => {
   dispatch(setProfileLoading());
   axios
     .get(`/api/profile/handle/${handle}`)
@@ -48,7 +50,7 @@ export const getProfileByHandle = handle => dispatch => {
 };
 
 // Get current profile
-export const getCurrentProfile = () => dispatch => {
+export const getCurrentProfile = () => (dispatch: any) => {
   dispatch(setProfileLoading());
   axios
     .get('/api/profile')
@@ -67,7 +69,9 @@ export const getCurrentProfile = () => dispatch => {
 };
 
 // Create profile
-export const createProfile = (profileData, history) => dispatch => {
+export const createProfile = (profileData: any, history: History) => (
+  dispatch: any
+) => {
   axios
     .post('/api/profile', profileData)
     .then(res => {
@@ -86,7 +90,7 @@ export const createProfile = (profileData, history) => dispatch => {
 };
 
 // Delete experience
-export const deleteExperience = id => dispatch => {
+export const deleteExperience = (id: string) => (dispatch: any) => {
   // TODO: handle authorization error
   axios
     .delete(`/api/profile/experience/${id}`)
@@ -105,7 +109,9 @@ export const deleteExperience = id => dispatch => {
 };
 
 // Add experience
-export const addExperience = (experienceData, history) => dispatch => {
+export const addExperience = (experienceData: any, history: History) => (
+  dispatch: any
+) => {
   // TODO: handle authorization error
   axios
     .post('/api/profile/experience', experienceData)
@@ -119,7 +125,9 @@ export const addExperience = (experienceData, history) => dispatch => {
 };
 
 // Add education
-export const addEducation = (educationData, history) => dispatch => {
+export const addEducation = (educationData: any, history: History) => (
+  dispatch: any
+) => {
   axios
     .post('/api/profile/education', educationData)
     .then(res => history.push('/dashboard'))
@@ -132,7 +140,7 @@ export const addEducation = (educationData, history) => dispatch => {
 };
 
 // Delete education
-export const deleteEducation = id => dispatch => {
+export const deleteEducation = (id: string) => (dispatch: any) => {
   // TODO: handle authorization error
   axios
     .delete(`/api/profile/education/${id}`)
@@ -151,7 +159,7 @@ export const deleteEducation = id => dispatch => {
 };
 
 // Delete profile
-export const deleteAccount = () => dispatch => {
+export const deleteAccount = () => (dispatch: any) => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
     axios
       .delete('/api/profile')

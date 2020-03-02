@@ -2,15 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Auth } from '../../reducers/authReducer';
+import { ErrorsRootState } from '../../types/errorTypes';
 import { loginUser, LoginData } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-
-interface Errors {
-  errors: {
-    password: string;
-    email: string;
-  };
-}
 
 const initialLoginData: LoginData = {
   email: '',
@@ -21,7 +15,7 @@ export default function Login() {
   let history = useHistory();
   const dispatch = useDispatch();
   const auth = useSelector((state: Auth) => state.auth);
-  const errors = useSelector((state: Errors) => state.errors);
+  const errors = useSelector((state: ErrorsRootState) => state.errors);
 
   const [loginData, setLoginData] = useState<LoginData>(initialLoginData);
 

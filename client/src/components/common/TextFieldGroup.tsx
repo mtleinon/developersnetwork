@@ -3,12 +3,12 @@ import classnames from 'classnames';
 
 type TextFieldGroupProps = {
   name: string;
-  placeHolder: string;
+  placeHolder?: string;
   value: string;
   label?: string;
   error?: string;
   info?: string;
-  type?: 'text' | 'password' | 'email';
+  type?: 'text' | 'password' | 'email' | 'date';
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
 };

@@ -1,28 +1,17 @@
-import { Actions } from '../actions/types';
-
-interface ErrorsData {
-  email?: string;
-  name?: string;
-  password?: string;
-  password2?: string;
-}
-
-export interface Errors {
-  errors: ErrorsData;
-}
+import { GET_ERRORS, CLEAR_ERRORS, ErrorsData } from '../types/errorTypes';
 
 const initialState: ErrorsData = {};
 
 interface Action {
-  type: Actions.GET_ERRORS | Actions.CLEAR_ERRORS;
+  type: typeof GET_ERRORS | typeof CLEAR_ERRORS;
   payload: any;
 }
 
 export default function(state = initialState, action: Action) {
   switch (action.type) {
-    case Actions.GET_ERRORS:
+    case GET_ERRORS:
       return action.payload;
-    case Actions.CLEAR_ERRORS:
+    case CLEAR_ERRORS:
       return {};
     default:
       return state;
