@@ -26,6 +26,7 @@ export interface ErrorsData {
   skills?: string;
   githubusername?: string;
   bio?: string;
+  text?: string;
 }
 
 export interface ErrorsRootState {

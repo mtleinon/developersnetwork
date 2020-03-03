@@ -1,14 +1,6 @@
 import { Actions } from './../actions/types';
 import isEmpty from '../validation/is-empty';
-
-interface AuthData {
-  isAuthenticated: boolean;
-  user: any;
-}
-
-export interface Auth {
-  auth: AuthData;
-}
+import { AuthData } from '../types/authTypes';
 
 interface Action {
   type: Actions.SET_CURRENT_USER;
@@ -17,7 +9,11 @@ interface Action {
 
 const initialState: AuthData = {
   isAuthenticated: false,
-  user: {}
+  user: {
+    id: '',
+    name: '',
+    avatar: ''
+  }
 };
 
 export default function(state = initialState, action: Action) {

@@ -7,7 +7,7 @@ import {
   GET_POST,
   POST_LOADING,
   DELETE_POST
-} from './types';
+} from '../types/postTypes';
 
 // Add Post
 export const addPost = postData => dispatch => {

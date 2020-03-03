@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Auth } from '../../reducers/authReducer';
+import { Auth } from '../../types/authTypes';
 import { ErrorsRootState } from '../../types/errorTypes';
 import { loginUser, LoginData } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';

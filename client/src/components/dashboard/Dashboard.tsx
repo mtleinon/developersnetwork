@@ -7,7 +7,7 @@ import Spinner from '../common/Spinner';
 import ProfileActions from './ProfileActions';
 import Experience from './Experience';
 import Education from './Education';
-import { Auth } from '../../reducers/authReducer';
+import { Auth } from '../../types/authTypes';
 import { ProfileRootState } from '../../types/profileTypes';
 
 export default function Dashboard() {

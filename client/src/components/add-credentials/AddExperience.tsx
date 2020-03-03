@@ -30,6 +30,11 @@ export default function AddExperience() {
     const value = e.target.value;
     setExperienceData(s => ({ ...s, [name]: value }));
   };
+  const onChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setExperienceData(s => ({ ...s, [name]: value }));
+  };
 
   const onCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setExperienceData(currentState => ({
@@ -128,7 +133,7 @@ export default function AddExperience() {
               name='description'
               placeholder='Job description'
               value={experienceData.description}
-              onChange={onChange}
+              onChange={onChangeText}
               error={errors.description}
               info='Tell us about the position'
             />

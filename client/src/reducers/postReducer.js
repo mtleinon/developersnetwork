@@ -4,7 +4,7 @@ import {
   GET_POSTS,
   GET_POST,
   DELETE_POST
-} from '../actions/types';
+} from '../types/postTypes';
 
 const initialState = {
   posts: [],

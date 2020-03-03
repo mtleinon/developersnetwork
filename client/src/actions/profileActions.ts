@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { History } from 'history';
-import { Profile } from '../types/profileTypes';
+// import { GetProfileAction } from '../types/profileTypes';
 
 import {
   GET_PROFILE,
@@ -9,7 +9,7 @@ import {
   GET_ERRORS,
   CLEAR_CURRENT_PROFILE,
   SET_CURRENT_USER
-} from './types';
+} from '../types/profileTypes';
 
 // Get all profiles
 export const getProfiles = () => (dispatch: any) => {

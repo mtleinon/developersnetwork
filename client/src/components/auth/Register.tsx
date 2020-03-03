@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { registerUser, RegisterData } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-import { Auth } from '../../reducers/authReducer';
+import { Auth } from '../../types/authTypes';
 import { ErrorsRootState } from '../../types/errorTypes';
 
 export default function Register() {

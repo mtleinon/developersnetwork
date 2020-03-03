@@ -22,23 +22,6 @@ const options = [
   { label: 'Other', value: 'Other' }
 ];
 
-// interface ProfileData {
-//   displaySocialInputs: boolean;
-//   handle: string;
-//   company: string;
-//   website: string;
-//   location: string;
-//   status: string;
-//   skills: string;
-//   githubusername: string;
-//   bio: string;
-//   twitter: string;
-//   facebook: string;
-//   linkedin: string;
-//   youtube: string;
-//   instagram: string;
-// }
-
 const initialProfileData: Profile = {
   displaySocialInputs: false,
   handle: '',
@@ -66,34 +49,17 @@ export default function CreateProfile() {
 
   const [profileData, setProfileData] = useState(initialProfileData);
 
-  // static propTypes = {
-  //   profile: PropTypes.object.isRequired,
-  //   errors: PropTypes.object.isRequired
-  // };
-
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // const profileData = {
-    //   handle: state.handle,
-    //   company: state.company,
-    //   website: state.website,
-    //   location: state.location,
-    //   status: state.status,
-    //   skills: state.skills,
-    //   githubusername: state.githubusername,
-    //   bio: state.bio,
-    //   twitter: state.twitter,
-    //   facebook: state.facebook,
-    //   linkedin: state.linkedin,
-    //   youtube: state.youtube,
-    //   instagram: state.instagram
-    // };
 
     dispatch(createProfile(profileData, history));
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = <
+    M extends React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  >(
+    e: M
+  ) => {
     const name = e.target.name;
     const value = e.target.value;
     setProfileData(s => ({ ...s, [name]: value }));

@@ -32,6 +32,12 @@ export default function Component() {
     setEducationData(s => ({ ...s, [name]: value }));
   };
 
+  const onChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setEducationData(s => ({ ...s, [name]: value }));
+  };
+
   const onCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEducationData(currentState => ({
       ...currentState,
@@ -128,7 +134,7 @@ export default function Component() {
               name='description'
               placeholder='Education description'
               value={educationData.description}
-              onChange={onChange}
+              onChange={onChangeText}
               error={errors.description}
               info='Tell us about your experience and what you learned'
             />
