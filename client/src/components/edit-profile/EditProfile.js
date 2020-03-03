@@ -169,7 +169,7 @@ export default function EditProfile() {
             <small className="d-block pb-3">* = required fields</small>
             <form onSubmit={onSubmit}>
               <TextFieldGroup
-                placeHolder="* Profile Handle"
+                placeholder="* Profile Handle"
                 name="handle"
                 value={state.handle}
                 onChange={onChange}
@@ -177,7 +177,7 @@ export default function EditProfile() {
                 info="A unique handle for your profile URL. Your full name, company name and nick name."
               />
               <SelectListGroup
-                placeHolder="Status"
+                placeholder="Status"
                 name="status"
                 value={state.status}
                 onChange={onChange}
@@ -186,7 +186,7 @@ export default function EditProfile() {
                 info="Give us an idea of where you are at in your career."
               />
               <TextFieldGroup
-                placeHolder="Company"
+                placeholder="Company"
                 name="company"
                 value={state.company}
                 onChange={onChange}
@@ -194,7 +194,7 @@ export default function EditProfile() {
                 info="Could be your own company or ony you work for."
               />
               <TextFieldGroup
-                placeHolder="Website"
+                placeholder="Website"
                 name="website"
                 value={state.website}
                 onChange={onChange}
@@ -202,7 +202,7 @@ export default function EditProfile() {
                 info="Could be your own or a company website."
               />
               <TextFieldGroup
-                placeHolder="Location"
+                placeholder="Location"
                 name="location"
                 value={state.location}
                 onChange={onChange}
@@ -210,7 +210,7 @@ export default function EditProfile() {
                 info="City & state suggested (e.g. Boston, MA)"
               />
               <TextFieldGroup
-                placeHolder="Skills"
+                placeholder="Skills"
                 name="skills"
                 value={state.skills}
                 onChange={onChange}
@@ -218,7 +218,7 @@ export default function EditProfile() {
                 info="Please use comma separated values (e.g. HTML, CSS, Javascript, PHP)"
               />
               <TextFieldGroup
-                placeHolder="Github Username"
+                placeholder="Github Username"
                 name="githubusername"
                 value={state.githubusername}
                 onChange={onChange}
@@ -226,7 +226,7 @@ export default function EditProfile() {
                 info="If you want your latest repos and a Github link, include your username."
               />
               <TextAreaFieldGroup
-                placeHolder="A short bio of yourself"
+                placeholder="A short bio of yourself"
                 name="bio"
                 value={state.bio}
                 onChange={onChange}

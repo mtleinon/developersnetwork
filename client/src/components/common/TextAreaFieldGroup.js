@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function TextAreaFieldGroup({
   name,
-  placeHolder,
+  placeholder,
   value,
   error,
   info,
@@ -16,7 +16,7 @@ function TextAreaFieldGroup({
         className={classnames("form-control form-control-lg", {
           "is-invalid": error
         })}
-        placeholder={placeHolder}
+        placeholder={placeholder}
         name={name}
         value={value}
         onChange={onChange}

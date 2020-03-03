@@ -15,6 +15,17 @@ export interface ErrorsData {
   title?: string;
   company?: string;
   location?: string;
+  twitter?: string;
+  facebook?: string;
+  linkedin?: string;
+  youtube?: string;
+  instagram?: string;
+  handle?: string;
+  status?: string;
+  website?: string;
+  skills?: string;
+  githubusername?: string;
+  bio?: string;
 }
 
 export interface ErrorsRootState {

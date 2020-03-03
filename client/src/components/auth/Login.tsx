@@ -48,7 +48,7 @@ export default function Login() {
             <form onSubmit={onSubmit}>
               <TextFieldGroup
                 name='email'
-                placeHolder='Email Address'
+                placeholder='Email Address'
                 value={loginData.email}
                 onChange={onChange}
                 error={errors.email}
@@ -56,7 +56,7 @@ export default function Login() {
               <TextFieldGroup
                 name='password'
                 type='password'
-                placeHolder='Password'
+                placeholder='Password'
                 value={loginData.password}
                 onChange={onChange}
                 error={errors.password}

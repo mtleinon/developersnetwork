@@ -46,7 +46,7 @@ export default function Register() {
             <form onSubmit={onSubmit}>
               <TextFieldGroup
                 name='name'
-                placeHolder='Name'
+                placeholder='Name'
                 value={registerData.name}
                 onChange={onChange}
                 error={errors.name}
@@ -54,7 +54,7 @@ export default function Register() {
               <TextFieldGroup
                 name='email'
                 type='email'
-                placeHolder='Email Address'
+                placeholder='Email Address'
                 value={registerData.email}
                 onChange={onChange}
                 error={errors.email}
@@ -63,7 +63,7 @@ export default function Register() {
               />
               <TextFieldGroup
                 name='password'
-                placeHolder='Password'
+                placeholder='Password'
                 value={registerData.password}
                 onChange={onChange}
                 error={errors.password}
@@ -72,7 +72,7 @@ export default function Register() {
 
               <TextFieldGroup
                 name='password2'
-                placeHolder='Confirm Password'
+                placeholder='Confirm Password'
                 value={registerData.password2}
                 onChange={onChange}
                 error={errors.password2}

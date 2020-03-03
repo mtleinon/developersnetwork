@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 type TextFieldGroupProps = {
   name: string;
-  placeHolder?: string;
+  placeholder?: string;
   value: string;
   label?: string;
   error?: string;
@@ -15,7 +15,7 @@ type TextFieldGroupProps = {
 
 function TextFieldGroup({
   name,
-  placeHolder,
+  placeholder,
   value,
   label,
   error,
@@ -31,7 +31,7 @@ function TextFieldGroup({
         className={classnames('form-control form-control-lg', {
           'is-invalid': error
         })}
-        placeholder={placeHolder}
+        placeholder={placeholder}
         name={name}
         value={value}
         onChange={onChange}

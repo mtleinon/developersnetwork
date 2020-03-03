@@ -71,21 +71,21 @@ export default function AddExperience() {
           <form onSubmit={onSubmit}>
             <TextFieldGroup
               name='title'
-              placeHolder='* Job Title'
+              placeholder='* Job Title'
               value={experienceData.title}
               onChange={onChange}
               error={errors.title}
             />
             <TextFieldGroup
               name='company'
-              placeHolder='* Company'
+              placeholder='* Company'
               value={experienceData.company}
               onChange={onChange}
               error={errors.company}
             />
             <TextFieldGroup
               name='location'
-              placeHolder='Location'
+              placeholder='Location'
               value={experienceData.location}
               onChange={onChange}
               error={errors.location}
@@ -126,7 +126,7 @@ export default function AddExperience() {
             </div>
             <TextAreaFieldGroup
               name='description'
-              placeHolder='Job description'
+              placeholder='Job description'
               value={experienceData.description}
               onChange={onChange}
               error={errors.description}

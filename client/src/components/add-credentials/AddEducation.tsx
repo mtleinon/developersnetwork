@@ -71,21 +71,21 @@ export default function Component() {
           <form onSubmit={onSubmit}>
             <TextFieldGroup
               name='schoolId'
-              placeHolder='* School or Bootcamp'
+              placeholder='* School or Bootcamp'
               value={educationData.schoolId}
               onChange={onChange}
               error={errors.schoolId}
             />
             <TextFieldGroup
               name='degree'
-              placeHolder='* Degree or Certificate'
+              placeholder='* Degree or Certificate'
               value={educationData.degree}
               onChange={onChange}
               error={errors.degree}
             />
             <TextFieldGroup
               name='fieldOfStudy'
-              placeHolder='Field of study'
+              placeholder='Field of study'
               value={educationData.fieldOfStudy}
               onChange={onChange}
               error={errors.fieldOfStudy}
@@ -126,7 +126,7 @@ export default function Component() {
             </div>
             <TextAreaFieldGroup
               name='description'
-              placeHolder='Education description'
+              placeholder='Education description'
               value={educationData.description}
               onChange={onChange}
               error={errors.description}
