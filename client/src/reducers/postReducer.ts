@@ -1,3 +1,4 @@
+import { PostActions, Post } from './../types/postTypes';
 import {
   ADD_POST,
   POST_LOADING,
@@ -12,7 +13,7 @@ const initialState = {
   loading: false
 };
 
-export default (state = initialState, { type, payload }) => {
+export default (state = initialState, { type, payload }: PostActions) => {
   switch (type) {
     case POST_LOADING:
       return {
@@ -42,7 +43,7 @@ export default (state = initialState, { type, payload }) => {
     case DELETE_POST:
       return {
         ...state,
-        posts: state.posts.filter(post => post._id !== payload)
+        posts: state.posts.filter((post: Post) => post._id !== payload)
       };
 
     default:

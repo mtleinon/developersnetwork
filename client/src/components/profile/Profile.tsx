@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import ProfileAbout from './ProfileAbout';
 import ProfileGithub from './ProfileGithub';
@@ -7,25 +7,30 @@ import ProfileCreds from './ProfileCreds';
 import ProfileHeader from './ProfileHeader';
 import Spinner from '../common/Spinner';
 import { getProfileByHandle } from '../../actions/profileActions';
+import { ProfileRootState } from '../../types/profileTypes';
 
 export default function Profile() {
-  const { profile, loading } = useSelector(state => state.profile);
+  const { profile, loading, notFound } = useSelector(
+    (state: ProfileRootState) => state.profile
+  );
+
   const history = useHistory();
   const dispatch = useDispatch();
 
   const { handle } = useParams();
 
   useEffect(() => {
-    if (handle) {
+    if (
+      !notFound &&
+      !loading &&
+      handle &&
+      (profile === null || (profile && handle !== profile.handle))
+    ) {
       dispatch(getProfileByHandle(handle));
-    }
-  }, [dispatch, handle])
-
-  useEffect(() => {
-    if (profile === null && loading) {
+    } else if (notFound) {
       history.push('/not-found');
     }
-  }, [profile, loading, history])
+  }, [dispatch, handle, profile, loading, notFound]);
 
   let profileContent;
 
@@ -34,13 +39,13 @@ export default function Profile() {
   } else {
     profileContent = (
       <div>
-        <div className="row">
-          <div className="col-md-6">
-            <Link to="/profiles" className="btn btn-light mb-3 float-left">
+        <div className='row'>
+          <div className='col-md-6'>
+            <Link to='/profiles' className='btn btn-light mb-3 float-left'>
               Back To Profiles
-              </Link>
+            </Link>
           </div>
-          <div className="col-md-6" />
+          <div className='col-md-6' />
         </div>
         <ProfileHeader profile={profile} />
         <ProfileAbout profile={profile} />
@@ -56,8 +61,8 @@ export default function Profile() {
   }
 
   return (
-    <div className="profile">
-      <div className="container">{profileContent}</div>
+    <div className='profile'>
+      <div className='container'>{profileContent}</div>
     </div>
   );
 }

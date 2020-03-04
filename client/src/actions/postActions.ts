@@ -1,4 +1,7 @@
+import { PostActions } from './../types/postTypes';
+import { PostActionTypes, NewPost, NewComment } from '../types/postTypes';
 import axios from 'axios';
+
 import {
   ADD_POST,
   GET_ERRORS,
@@ -9,9 +12,10 @@ import {
   DELETE_POST
 } from '../types/postTypes';
 
-// Add Post
-export const addPost = postData => dispatch => {
-  dispatch(clearErrors());
+type Dispatch = (action: { type: PostActionTypes; payload?: any }) => void;
+
+export const addPost = (postData: NewPost) => (dispatch: Dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
   axios
     .post('/api/posts', postData)
     .then(res =>
@@ -29,8 +33,10 @@ export const addPost = postData => dispatch => {
 };
 
 // Add Comment to a post
-export const addComment = (postId, commentData) => dispatch => {
-  dispatch(clearErrors());
+export const addComment = (postId: string, commentData: NewComment) => (
+  dispatch: Dispatch
+) => {
+  dispatch({ type: CLEAR_ERRORS });
   axios
     .post(`/api/posts/comment/${postId}`, commentData)
     .then(res =>
@@ -47,8 +53,8 @@ export const addComment = (postId, commentData) => dispatch => {
     );
 };
 // Get Posts
-export const getPosts = () => dispatch => {
-  dispatch(setPostLoading());
+export const getPosts = () => (dispatch: Dispatch) => {
+  dispatch({ type: POST_LOADING });
   axios
     .get('/api/posts')
     .then(res =>
@@ -66,8 +72,8 @@ export const getPosts = () => dispatch => {
 };
 
 // Get Post with id
-export const getPost = id => dispatch => {
-  dispatch(setPostLoading());
+export const getPost = (id: string) => (dispatch: any) => {
+  dispatch({ type: POST_LOADING });
   axios
     .get(`/api/posts/${id}`)
     .then(res =>
@@ -92,14 +98,14 @@ export const setPostLoading = () => {
 };
 
 // Clear errors
-export const clearErrors = () => {
-  return {
-    type: CLEAR_ERRORS
-  };
-};
+// export const clearErrors = function (): PostActions {
+//   return {
+//     type: PostActions
+//   };
+// };
 
 // Delete Post
-export const deletePost = postId => dispatch => {
+export const deletePost = (postId: string) => (dispatch: Dispatch) => {
   axios
     .delete(`/api/posts/${postId}`)
     .then(res =>
@@ -117,7 +123,9 @@ export const deletePost = postId => dispatch => {
 };
 
 // Delete Comment
-export const deleteComment = (postId, commentId) => dispatch => {
+export const deleteComment = (postId: string, commentId: string) => (
+  dispatch: Dispatch
+) => {
   axios
     .delete(`/api/posts/comment/${postId}/${commentId}`)
     .then(res =>
@@ -135,7 +143,7 @@ export const deleteComment = (postId, commentId) => dispatch => {
 };
 
 // Add Like to a post
-export const addLike = postId => dispatch => {
+export const addLike = (postId: string) => (dispatch: any) => {
   axios
     .post(`/api/posts/like/${postId}`)
     .then(res => dispatch(getPosts()))
@@ -148,7 +156,7 @@ export const addLike = postId => dispatch => {
 };
 
 // Remove like from a post
-export const removeLike = postId => dispatch => {
+export const removeLike = (postId: string) => (dispatch: any) => {
   axios
     .post(`/api/posts/unlike/${postId}`)
     .then(res => dispatch(getPosts()))

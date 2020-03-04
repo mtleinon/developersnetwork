@@ -57,7 +57,7 @@ export default function EditProfile() {
       const profile = currentProfile.profile;
 
       // Convert skills array back to CSV
-      const skillsCSV = profile.skills.join(',');
+      // const skillsCSV = profile.skills.join(',');
 
       // If profile field doesn't exist, set it to empty string
       profile.handle = !isEmpty(profile.handle) ? profile.handle : '';
@@ -89,7 +89,8 @@ export default function EditProfile() {
         : '';
 
       // Set component fields state
-      setState({ ...profile, skills: skillsCSV });
+      // setState({ ...profile, skills: skillsCSV });
+      setState({ ...profile });
     }
   }, [currentProfile]);
 

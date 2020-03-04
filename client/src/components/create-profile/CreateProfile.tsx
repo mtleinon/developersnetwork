@@ -38,7 +38,8 @@ const initialProfileData: Profile = {
   youtube: '',
   instagram: '',
   education: [],
-  experience: []
+  experience: [],
+  user: { name: '' }
 };
 
 export default function CreateProfile() {
@@ -48,11 +49,20 @@ export default function CreateProfile() {
   const dispatch = useDispatch();
 
   const [profileData, setProfileData] = useState(initialProfileData);
+  const [skills, setSkills] = useState('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    // profileData.skills = skills.split(',');
+    profileData.skills = skills;
     dispatch(createProfile(profileData, history));
+  };
+
+  const onChangeSkills = <M extends React.ChangeEvent<HTMLInputElement>>(
+    e: M
+  ) => {
+    const value = e.target.value;
+    setSkills(value);
   };
 
   const onChange = <
@@ -172,8 +182,8 @@ export default function CreateProfile() {
               <TextFieldGroup
                 placeholder='Skills'
                 name='skills'
-                value={profileData.skills}
-                onChange={onChange}
+                value={skills}
+                onChange={onChangeSkills}
                 error={errors.skills}
                 info='Please use comma separated values (e.g. HTML, CSS, Javascript, PHP)'
               />

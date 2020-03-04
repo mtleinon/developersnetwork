@@ -1,18 +1,20 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addComment } from '../../actions/postActions';
+import { Auth } from '../../types/authTypes';
+import { ErrorsRootState } from '../../types/errorTypes';
 
-export default function ({ postId }) {
-  const auth = useSelector(state => state.auth);
-  const errors = useSelector(state => state.errors);
+export default function({ postId }: { postId: string }) {
+  const auth = useSelector((state: Auth) => state.auth);
+  const errors = useSelector((state: ErrorsRootState) => state.errors);
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
-    text: '',
-  })
+    text: ''
+  });
 
-  const onSubmit = e => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newComment = {
       text: state.text,
@@ -23,32 +25,29 @@ export default function ({ postId }) {
     setState({ text: '' });
   };
 
-  const onChange = e => {
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     setState(s => ({ ...s, [name]: value }));
   };
-
   return (
-    <div className="post-form mb-3">
-      <div className="card card-info">
-        <div className="card-header bg-info text-white">
-          Make a comment...
-          </div>
-        <div className="card-body">
+    <div className='post-form mb-3'>
+      <div className='card card-info'>
+        <div className='card-header bg-info text-white'>Make a comment...</div>
+        <div className='card-body'>
           <form onSubmit={onSubmit}>
-            <div className="form-group">
+            <div className='form-group'>
               <TextAreaFieldGroup
-                placeholder="Comment the post"
-                name="text"
+                placeholder='Comment the post'
+                name='text'
                 value={state.text}
                 onChange={onChange}
                 error={errors.text}
               />
             </div>
-            <button type="submit" className="btn btn-dark">
+            <button type='submit' className='btn btn-dark'>
               Submit
-              </button>
+            </button>
           </form>
         </div>
       </div>

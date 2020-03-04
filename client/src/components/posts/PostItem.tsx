@@ -7,25 +7,15 @@ import { Link } from 'react-router-dom';
 import { deletePost, addLike, removeLike } from '../../actions/postActions';
 import { Auth } from '../../types/authTypes';
 import { Like, Post } from '../../types/postTypes';
+
 interface PostItemProps {
   post: Post;
-  showActions: boolean;
+  showActions?: boolean;
 }
 
 export default function PostItem({ post, showActions = true }: PostItemProps) {
   const dispatch = useDispatch();
   const auth = useSelector((state: Auth) => state.auth);
-
-  // static defaultProps = {
-  //   showActions: true
-  // };
-  // static propTypes = {
-  //   post: PropTypes.object.isRequired,
-  //   auth: PropTypes.object.isRequired,
-  //   deletePost: PropTypes.func.isRequired,
-  //   addLike: PropTypes.func.isRequired,
-  //   removeLike: PropTypes.func.isRequired
-  // };
 
   const onDeleteClick = (postId: string) => () => {
     dispatch(deletePost(postId));
@@ -107,18 +97,3 @@ export default function PostItem({ post, showActions = true }: PostItemProps) {
     </div>
   );
 }
-
-// const mapStateToProps = state => ({
-//   auth: state.auth
-// });
-
-// const mapDispatchToProps = {
-//   deletePost,
-//   addLike,
-//   removeLike
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(PostItem);

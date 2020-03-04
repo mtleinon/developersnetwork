@@ -8,7 +8,8 @@ import {
   PROFILE_LOADING,
   GET_ERRORS,
   CLEAR_CURRENT_PROFILE,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  PROFILE_NOT_FOUND
 } from '../types/profileTypes';
 
 // Get all profiles
@@ -16,12 +17,19 @@ export const getProfiles = () => (dispatch: any) => {
   dispatch(setProfileLoading());
   axios
     .get('/api/profile/all')
-    .then(res =>
+    .then(res => {
+      const convertedData = res.data.map((resProfile: any) => {
+        const profile = { ...resProfile };
+        if (profile.skills) {
+          profile.skills = profile.skills.join(',');
+        }
+        return profile;
+      });
       dispatch({
         type: GET_PROFILES,
-        payload: res.data
-      })
-    )
+        payload: convertedData
+      });
+    })
     .catch(err =>
       dispatch({
         type: GET_PROFILES,
@@ -35,18 +43,17 @@ export const getProfileByHandle = (handle: string) => (dispatch: any) => {
   dispatch(setProfileLoading());
   axios
     .get(`/api/profile/handle/${handle}`)
-    .then(res =>
+    .then(res => {
+      const convertedData = res.data;
+      if (convertedData.skills) {
+        convertedData.skills = convertedData.skills.join(',');
+      }
       dispatch({
         type: GET_PROFILE,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: null
-      })
-    );
+        payload: convertedData
+      });
+    })
+    .catch(err => dispatch({ type: PROFILE_NOT_FOUND }));
 };
 
 // Get current profile
@@ -54,12 +61,16 @@ export const getCurrentProfile = () => (dispatch: any) => {
   dispatch(setProfileLoading());
   axios
     .get('/api/profile')
-    .then(res =>
+    .then(res => {
+      const convertedData = res.data;
+      if (convertedData.skills) {
+        convertedData.skills = convertedData.skills.join(',');
+      }
       dispatch({
         type: GET_PROFILE,
-        payload: res.data
-      })
-    )
+        payload: convertedData
+      });
+    })
     .catch(err =>
       dispatch({
         type: GET_PROFILE,
