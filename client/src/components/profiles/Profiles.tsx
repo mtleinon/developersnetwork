@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../common/Spinner';
 import { getProfiles } from '../../actions/profileActions';
 import ProfileItem from './ProfileItem';
+import { ProfileRootState } from '../../types/profileTypes';
 
 export default function Profiles() {
-  const { profiles, loading } = useSelector(state => state.profile);
+  const { profiles, loading } = useSelector(
+    (state: ProfileRootState) => state.profile
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,14 +30,14 @@ export default function Profiles() {
   }
 
   return (
-    <div className="profiles">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="display-4 text-center">Develooper Profiles</h1>
-            <p className="lead text center">
+    <div className='profiles'>
+      <div className='container'>
+        <div className='row'>
+          <div className='col-md-12'>
+            <h1 className='display-4 text-center'>Develooper Profiles</h1>
+            <p className='lead text center'>
               Browse and connect with developers
-              </p>
+            </p>
             {profileItems}
           </div>
         </div>

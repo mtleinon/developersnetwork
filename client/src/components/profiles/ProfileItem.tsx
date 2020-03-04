@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import isEmpty from '../../validation/is-empty';
+import { Profile } from '../../types/profileTypes';
 
-export default function ProfileItem({ profile }) {
+
+export default function ProfileItem({ profile }: { profile: Profile }) {
   return (
     <div className="card card-body bg-light mb-3">
       <div className="row">

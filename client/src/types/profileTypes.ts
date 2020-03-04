@@ -2,6 +2,8 @@ export interface ExperienceType {
   _id: string;
   company: string;
   title: string;
+  location: string;
+  description: string;
   from: string;
   to: string;
 }
@@ -9,6 +11,8 @@ export interface ExperienceType {
 export interface EducationType {
   _id: string;
   schoolId: string;
+  fieldOfStudy: string;
+  description: string;
   degree: string;
   from: string;
   to: string;
@@ -16,9 +20,19 @@ export interface EducationType {
 
 export interface User {
   name: string;
+  avatar: string;
+  location: string;
 }
 
+export interface Social {
+  twitter: string;
+  facebook: string;
+  linkedin: string;
+  instagram: string;
+  youtube: string;
+}
 export interface Profile {
+  _id: string;
   displaySocialInputs: boolean;
   handle: string;
   company: string;
@@ -36,6 +50,7 @@ export interface Profile {
   experience: ExperienceType[];
   education: EducationType[];
   user: User;
+  social: Social;
 }
 
 export interface ProfileState {

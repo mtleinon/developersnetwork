@@ -23,6 +23,7 @@ const options = [
 ];
 
 const initialProfileData: Profile = {
+  _id: '',
   displaySocialInputs: false,
   handle: '',
   company: '',
@@ -39,7 +40,14 @@ const initialProfileData: Profile = {
   instagram: '',
   education: [],
   experience: [],
-  user: { name: '' }
+  user: { name: '', avatar: '', location: '' },
+  social: {
+    twitter: '',
+    facebook: '',
+    linkedin: '',
+    instagram: '',
+    youtube: ''
+  }
 };
 
 export default function CreateProfile() {
@@ -70,6 +78,12 @@ export default function CreateProfile() {
   >(
     e: M
   ) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setProfileData(s => ({ ...s, [name]: value }));
+  };
+
+  const onChangeS = <M extends React.ChangeEvent<HTMLSelectElement>>(e: M) => {
     const name = e.target.name;
     const value = e.target.value;
     setProfileData(s => ({ ...s, [name]: value }));
@@ -150,7 +164,7 @@ export default function CreateProfile() {
                 // placeholder='Status'
                 name='status'
                 value={profileData.status}
-                onChange={onChange}
+                onChange={onChangeS}
                 options={options}
                 error={errors.status}
                 info='Give us an idea of where you are at in your career.'
