@@ -6,11 +6,15 @@ import { Route, Redirect } from 'react-router-dom';
 import { Auth } from '../../types/authTypes';
 
 export default function PrivateRoute({
+  exact,
+  path,
   Component,
   ...rest
 }: {
+  exact: boolean;
+  path: string;
   Component: any;
-  rest: any[];
+  rest?: any[];
 }) {
   const auth = useSelector((state: Auth) => state.auth);
   return (
@@ -26,13 +30,3 @@ export default function PrivateRoute({
     />
   );
 }
-
-// PrivateRoute.propTypes = {
-//   auth: PropTypes.object.isRequired
-// };
-
-// const mapStateToProps = state => ({
-//   auth: state.auth
-// });
-
-// export default connect(mapStateToProps)(PrivateRoute);
