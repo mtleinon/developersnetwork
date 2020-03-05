@@ -130,7 +130,7 @@ router.post(
       profileFields.skills = req.body.skills.split(",");
     }
 
-    // Social media
+    // Social media TODO
     profileFields.social = {};
     if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
     if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
