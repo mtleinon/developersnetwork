@@ -12,7 +12,8 @@ const initialState: AuthData = {
   user: {
     id: '',
     name: '',
-    avatar: ''
+    avatar: '',
+    location: ''
   }
 };
 

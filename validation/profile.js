@@ -23,6 +23,7 @@ module.exports = function validateProfileInput(data) {
     errors.skills = "Skills field is required";
   }
 
+  // TODO:
   if (!isEmpty(data.website) && !Validator.isURL(data.website)) {
     errors.website = "Not a valid URL";
   }

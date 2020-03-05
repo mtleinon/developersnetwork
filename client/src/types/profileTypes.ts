@@ -52,7 +52,23 @@ export interface Profile {
   user: User;
   social: Social;
 }
-
+export interface EditProfileType {
+  _id: string;
+  displaySocialInputs: boolean;
+  handle: string;
+  company: string;
+  website: string;
+  location: string;
+  status: string;
+  skills: string;
+  githubusername: string;
+  bio: string;
+  twitter: string;
+  facebook: string;
+  linkedin: string;
+  youtube: string;
+  instagram: string;
+}
 export interface ProfileState {
   profile: Profile | null;
   profiles: Profile[] | null;

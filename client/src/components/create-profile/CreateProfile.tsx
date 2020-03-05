@@ -8,7 +8,7 @@ import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import { createProfile } from '../../actions/profileActions';
 import { ErrorsRootState } from '../../types/errorTypes';
-import { Profile } from '../../types/profileTypes';
+import { EditProfileType } from '../../types/profileTypes';
 
 const options = [
   { label: '* Select professional Status', value: 0 },
@@ -22,7 +22,7 @@ const options = [
   { label: 'Other', value: 'Other' }
 ];
 
-const initialProfileData: Profile = {
+const initialProfileData: EditProfileType = {
   _id: '',
   displaySocialInputs: false,
   handle: '',
@@ -37,40 +37,19 @@ const initialProfileData: Profile = {
   facebook: '',
   linkedin: '',
   youtube: '',
-  instagram: '',
-  education: [],
-  experience: [],
-  user: { name: '', avatar: '', location: '' },
-  social: {
-    twitter: '',
-    facebook: '',
-    linkedin: '',
-    instagram: '',
-    youtube: ''
-  }
+  instagram: ''
 };
 
 export default function CreateProfile() {
   const history = useHistory();
   const errors = useSelector((state: ErrorsRootState) => state.errors);
-  // const profile = useSelector(state => state.profile);
   const dispatch = useDispatch();
 
   const [profileData, setProfileData] = useState(initialProfileData);
-  const [skills, setSkills] = useState('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // profileData.skills = skills.split(',');
-    profileData.skills = skills;
     dispatch(createProfile(profileData, history));
-  };
-
-  const onChangeSkills = <M extends React.ChangeEvent<HTMLInputElement>>(
-    e: M
-  ) => {
-    const value = e.target.value;
-    setSkills(value);
   };
 
   const onChange = <
@@ -83,7 +62,9 @@ export default function CreateProfile() {
     setProfileData(s => ({ ...s, [name]: value }));
   };
 
-  const onChangeS = <M extends React.ChangeEvent<HTMLSelectElement>>(e: M) => {
+  const onChangeSocial = <M extends React.ChangeEvent<HTMLSelectElement>>(
+    e: M
+  ) => {
     const name = e.target.name;
     const value = e.target.value;
     setProfileData(s => ({ ...s, [name]: value }));
@@ -164,7 +145,7 @@ export default function CreateProfile() {
                 // placeholder='Status'
                 name='status'
                 value={profileData.status}
-                onChange={onChangeS}
+                onChange={onChangeSocial}
                 options={options}
                 error={errors.status}
                 info='Give us an idea of where you are at in your career.'
@@ -196,8 +177,8 @@ export default function CreateProfile() {
               <TextFieldGroup
                 placeholder='Skills'
                 name='skills'
-                value={skills}
-                onChange={onChangeSkills}
+                value={profileData.skills}
+                onChange={onChange}
                 error={errors.skills}
                 info='Please use comma separated values (e.g. HTML, CSS, Javascript, PHP)'
               />

@@ -7,8 +7,8 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import { createProfile, getCurrentProfile } from '../../actions/profileActions';
-import isEmpty from '../../validation/is-empty';
-import { ProfileRootState } from '../../types/profileTypes';
+// import isEmpty from '../../validation/is-empty';
+import { ProfileRootState, EditProfileType } from '../../types/profileTypes';
 import { ErrorsRootState } from '../../types/errorTypes';
 
 const options = [
@@ -23,7 +23,8 @@ const options = [
   { label: 'Other', value: 'Other' }
 ];
 
-const initialState = {
+const initialProfileData: EditProfileType = {
+  _id: '',
   displaySocialInputs: false,
   handle: '',
   company: '',
@@ -38,7 +39,6 @@ const initialState = {
   linkedin: '',
   youtube: '',
   instagram: ''
-  // errors: {}
 };
 
 export default function EditProfile() {
@@ -51,8 +51,9 @@ export default function EditProfile() {
 
   const dispatch = useDispatch();
 
-  const [profileData, setProfileData] = useState(initialState);
+  const [profileData, setProfileData] = useState(initialProfileData);
   const [displaySocialInputs, setDisplaySocialInputs] = useState(false);
+
   useEffect(() => {
     dispatch(getCurrentProfile());
   }, [dispatch]);
@@ -60,64 +61,15 @@ export default function EditProfile() {
   // Fill Edit Profile forms fields when component is mounted
   useEffect(() => {
     if (currentProfile.profile) {
-      const profile = currentProfile.profile;
-
-      // Convert skills array back to CSV
-      // const skillsCSV = profile.skills.join(',');
-
-      // If profile field doesn't exist, set it to empty string
-      profile.handle = !isEmpty(profile.handle) ? profile.handle : '';
-      profile.company = !isEmpty(profile.company) ? profile.company : '';
-      profile.website = !isEmpty(profile.website) ? profile.website : '';
-      profile.location = !isEmpty(profile.location) ? profile.location : '';
-      profile.status = !isEmpty(profile.status) ? profile.status : '';
-      profile.githubusername = !isEmpty(profile.githubusername)
-        ? profile.githubusername
-        : '';
-      profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
-
-      // profile.social is an object
-      // profile.social = !isEmpty(profile.social) ? profile.social : {};
-      profile.twitter = !isEmpty(profile.social.twitter)
-        ? profile.social.twitter
-        : '';
-      profile.facebook = !isEmpty(profile.social.facebook)
-        ? profile.social.facebook
-        : '';
-      profile.linkedin = !isEmpty(profile.social.linkedin)
-        ? profile.social.linkedin
-        : '';
-      profile.youtube = !isEmpty(profile.social.youtube)
-        ? profile.social.youtube
-        : '';
-      profile.instagram = !isEmpty(profile.social.instagram)
-        ? profile.social.instagram
-        : '';
-
-      // Set component fields profileData
-      // setState({ ...profile, skills: skillsCSV });
-      setProfileData({ ...profile });
+      const editProfile: EditProfileType = {
+        ...currentProfile.profile,
+        ...currentProfile.profile.social
+      };
+      setProfileData({ ...editProfile });
     }
   }, [currentProfile]);
 
-  // const onSubmit = e => {
-  //   e.preventDefault();
-  //   dispatch(createProfile(profileData, history));
-  // };
-
-  // const onChange = e => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   setState(s => ({ ...s, [name]: value }));
-  // };
-
-  // const onChangeSkills = <M extends React.ChangeEvent<HTMLInputElement>>(
-  //   e: M
-  // ) => {
-  //   const value = e.target.value;
-  //   setSkills(value);
-  // };
-  const onChangeS = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     setProfileData(s => ({ ...s, [name]: value }));
@@ -211,7 +163,7 @@ export default function EditProfile() {
                 placeholder='Status'
                 name='status'
                 value={profileData.status}
-                onChange={onChangeS}
+                onChange={onChangeSelect}
                 options={options}
                 error={errors.status}
                 info='Give us an idea of where you are at in your career.'

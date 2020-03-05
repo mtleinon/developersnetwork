@@ -1,4 +1,4 @@
-import { PostActions } from './../types/postTypes';
+// import { PostActions } from './../types/postTypes';
 import { PostActionTypes, NewPost, NewComment } from '../types/postTypes';
 import axios from 'axios';
 

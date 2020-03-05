@@ -30,7 +30,7 @@ export default function Profile() {
     } else if (notFound) {
       history.push('/not-found');
     }
-  }, [dispatch, handle, profile, loading, notFound]);
+  }, [dispatch, handle, profile, loading, notFound, history]);
 
   let profileContent;
 
