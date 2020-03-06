@@ -11,4 +11,4 @@ You can try the app in the following link: https://developers-connection.herokua
 
 ## Pictore from interface
 
-<img src="https://github.com/mtleinon/training/blob/master/images/devConnector.jpg" width="600">
+<img src="https://github.com/mtleinon/training/blob/master/images/devConnector.jpg" width="600" style="margin-left: 20px">
