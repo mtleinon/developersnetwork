@@ -12,3 +12,7 @@ You can try the app in the following link: https://developers-connection.herokua
 ### Picture from interface
 
 <img src="https://github.com/mtleinon/training/blob/master/images/devConnector.jpg" width="600" align="middle">
+
+### Video from the app
+
+https://www.loom.com/share/847f8cad946a4908bef240a9e93b2c23
