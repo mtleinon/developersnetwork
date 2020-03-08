@@ -11,8 +11,11 @@ You can try the app with the following link: https://developers-connection.herok
 
 ## Picture from interface
 
+Below is a picture from users profile page: 
 <img src="https://github.com/mtleinon/training/blob/master/images/devConnector.jpg" width="600" align="middle">
 
-## Video from the app
+## View demo from the app
+
+Below is a video that shows the main views of the app:
 
 https://www.loom.com/share/847f8cad946a4908bef240a9e93b2c23
