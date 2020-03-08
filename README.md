@@ -7,7 +7,7 @@ However I used hooks instead of the class based components during the implementa
 
 ## Run the app
 
-You can try the app in the following link: https://developers-connection.herokuapp.com/
+You can try the app with the following link: https://developers-connection.herokuapp.com/
 
 ## Picture from interface
 
